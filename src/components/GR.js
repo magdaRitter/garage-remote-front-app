@@ -1,53 +1,51 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../App";
 import { Button, Stack, Container } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-class GR extends Component {
+export default function GR() {
+  const { state } = useContext(AuthContext);
 
-  requestSignal(signalType, message) {
-    fetch('http://localhost:8080/home/signal', {
+  const requestGarageSignal = () => {
+    const request_url = state.request_garage_url
+    requestSignal(request_url, "Request to open garage was fired");
+  }
+
+  const requestGateSignal = () => {
+    const request_url = state.request_gate_url
+    requestSignal(request_url, "Request to open gate was fired");
+  }
+
+  const requestSignal = (request_url, message) => {
+    fetch(request_url, {
       method: 'POST',
+      mode: 'no-cors',
       headers: {
         "content-type": "application/json",
         "accept": "application/json"
       },
-      body: JSON.stringify({
-        signalType: signalType
-      })
     })
-      .then(response => response.json())
       .then(response => {
         console.log(response);
         toast(message);
       })
       .catch(err => {
         console.log(err);
+        toast(err);
       });
   }
 
-  requestGarageSignal(){
-    this.requestSignal("GARAGE", "Request to open garage was fired");
-  }
-
-  requestGateSignal(){
-    this.requestSignal("GATE", "Request to open gate was fired");
-  }
-
-  render() {
-    return (
-      <div>
-        <Container >
+  return (
+    <div>
+      <Container >
         <Stack gap={1} className="col-md-5 mx-auto">
-          <Button onClick={this.requestGarageSignal.bind(this)}>Garage</Button>
-            <Button onClick={this.requestGateSignal.bind(this)}>Gate</Button>
+          <Button onClick={requestGarageSignal}>Garage</Button>
+          <Button onClick={requestGateSignal}>Gate</Button>
         </Stack>
-        </Container>
-        <ToastContainer />
-      </div>
-    );
-  }
+      </Container>
+      <ToastContainer />
+    </div>
+  );
 }
-
-export default GR;

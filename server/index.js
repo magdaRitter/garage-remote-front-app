@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const FormData = require("form-data");
 const fetch = require("node-fetch");
-const { client_id, redirect_uri, client_secret } = require("./config");
+const { client_id, redirect_uri, client_secret, garage_remote_signal_url } = require("./config");
 
 const config = require("./config");
 
@@ -53,8 +53,50 @@ app.post("/authenticate", (req, res) => {
     });
 });
 
+app.post("/signal/garage", (req, res) => {
+  fetch(garage_remote_signal_url, {
+    method: "POST",
+    body: JSON.stringify({
+      signalType: "GARAGE"
+    }),
+    headers: {
+      "content-type": "application/json",
+      "accept": "application/json"
+    }
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      return res.status(200).json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json(error);
+    });
+});
+
+app.post("/signal/gate", (req, res) => {
+  fetch(garage_remote_signal_url, {
+    method: "POST",
+    body: JSON.stringify({
+      signalType: "GATE"
+    }),
+    headers: {
+      "content-type": "application/json",
+      "accept": "application/json"
+    }
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      return res.status(200).json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json(error);
+    });
+});
+
 app.get("/", (req, res) => {
-  
+
 })
 
 const PORT = process.env.SERVER_PORT || 5000;

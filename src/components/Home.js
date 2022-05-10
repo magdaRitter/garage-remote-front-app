@@ -15,7 +15,7 @@ export default function Home() {
     return <Navigate to="/login" />;
   }
 
-  const { avatar_url, name} = state.user
+  const { avatar_url, name } = state.user
 
   const handleLogout = () => {
     dispatch({
