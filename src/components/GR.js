@@ -18,6 +18,11 @@ export default function GR() {
     requestSignal(request_url, "Request to open gate was fired");
   }
 
+  const requestBothSignals = () => {
+    const request_url = state.request_both_url
+    requestSignal(request_url, "Request to open both was fired");
+  }
+
   const requestSignal = (request_url, message) => {
     fetch(request_url, {
       method: 'POST',
@@ -40,9 +45,10 @@ export default function GR() {
   return (
     <div>
       <Container >
-        <Stack gap={1} className="col-md-5 mx-auto">
+        <Stack gap={4} className="col-md-5 mx-auto">
           <Button onClick={requestGarageSignal}>Garage</Button>
           <Button onClick={requestGateSignal}>Gate</Button>
+          <Button onClick={requestBothSignals}>Both</Button>
         </Stack>
       </Container>
       <ToastContainer />

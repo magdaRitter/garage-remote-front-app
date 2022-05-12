@@ -6,7 +6,8 @@ export const initialState = {
   client_secret: process.env.REACT_APP_CLIENT_SECRET,
   proxy_url: process.env.REACT_APP_PROXY_URL,
   request_garage_url: process.env.REACT_APP_REQUEST_GARAGE_URL,
-  request_gate_url: process.env.REACT_APP_REQUEST_GATE_URL
+  request_gate_url: process.env.REACT_APP_REQUEST_GATE_URL,
+  request_both_url: process.env.REACT_APP_REQUEST_BOTH_URL
 };
 
 export const reducer = (state, action) => {
