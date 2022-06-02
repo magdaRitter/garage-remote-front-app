@@ -8,7 +8,8 @@ const config = {
   redirect_uri: process.env.REACT_APP_REDIRECT_URI,
   client_secret: process.env.REACT_APP_CLIENT_SECRET,
   proxy_url: process.env.REACT_APP_PROXY_URL,
-  garage_remote_signal_url: process.env.REACT_APP_GARAGE_REMOTE_SIGNAL_URL
+  garage_remote_signal_url: process.env.REACT_APP_GARAGE_REMOTE_SIGNAL_URL,
+  allowed_users: process.env.REACT_APP_ALLOWED_USERS.split(' ')
 };
 
 const envVarsSchema = Joi.object({
@@ -16,7 +17,8 @@ const envVarsSchema = Joi.object({
   redirect_uri: Joi.string().required(),
   client_secret: Joi.string().required(),
   proxy_url: Joi.string().required(),
-  garage_remote_signal_url: Joi.string().required()
+  garage_remote_signal_url: Joi.string().required(),
+  allowed_users: Joi.array().required()
 });
 
 console.log('config client_id ' + config.client_id)

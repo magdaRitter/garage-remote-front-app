@@ -11,6 +11,10 @@ export default function Login() {
   const [data, setData] = useState({ errorMessage: "", isLoading: false });
   const { client_id, redirect_uri } = state;
 
+  const userIsAllowed = (userMail) => {
+    return state.allowed_users.includes(userMail)
+  }
+
   useEffect(() => {
     const url = window.location.href;
     const hasCode = url.includes("?code=");
@@ -32,6 +36,13 @@ export default function Login() {
       })
         .then(response => response.json())
         .then(data => {
+          var userMail = data['email']
+
+          if(!userIsAllowed(userMail)){
+            console.log('User ' + userMail + ' is not allowed')
+            throw new Error("User not allowed!")
+          }
+
           dispatch({
             type: "LOGIN",
             payload: { user: data, isLoggedIn: true }

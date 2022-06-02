@@ -44,8 +44,8 @@ export default function GR() {
 
   return (
     <div>
-      <Container >
-        <Stack gap={4} className="col-md-5 mx-auto">
+      <Container style={({ marginTop: '10rem' , marginBottom: '10rem' })}>
+        <Stack gap={2} className="col-md-5 mx-auto">
           <Button onClick={requestGarageSignal}>Garage</Button>
           <Button onClick={requestGateSignal}>Gate</Button>
           <Button onClick={requestBothSignals}>Both</Button>
